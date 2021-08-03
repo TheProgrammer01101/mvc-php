@@ -22,10 +22,11 @@ Class App {
                 unset($url[1]);
             }
         }
-        show($url);
+        $this->params = array_values($url);
+        call_user_func_array([$this->controller, $this->method], $this->params);
     }
     private function splitURL() {
-        return explode("/", trim($_GET['url'],"/"));
+        return explode("/", filter_var(trim($_GET['url'],"/"),FILTER_SANITIZE_URL));
     }
 }
 
